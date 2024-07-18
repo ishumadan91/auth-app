@@ -1,0 +1,46 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p>Test</p>
+        <form>
+            <div>
+                <input type="text" />
+            </div>
+            <div>
+                <input type="password" />
+            </div>
+            <button type="submit" >Submit</button>
+
+            <div>
+                <a id="makeApiCall">Make api call</a>
+            </div>
+        </form>
+        <script>
+            const textElem = document.querySelector("[type=text]");
+            const passwordElem = document.querySelector("[type=password]");
+            const buttonElem = document.querySelector("button");
+            const apiCallLink = document.querySelector("#makeApiCall");
+            buttonElem.addEventListener("click", (e) => {
+                e.preventDefault();
+                const body = {
+                    user: textElem.value,
+                    password: passwordElem.value,
+                }
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                fetch("/api/login", {method: "POST", body: JSON.stringify(body), headers})
+            })
+            apiCallLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                const token = window.localStorage.getItem("token")
+                const body = {token}
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                fetch("/api/auth", {method: "POST", body: JSON.stringify(body), headers})
+            })
+        </script>
+    </body>
+</html>
